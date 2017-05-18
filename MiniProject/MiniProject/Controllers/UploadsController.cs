@@ -72,7 +72,8 @@ namespace MiniProject.Controllers
                         db.SaveChanges();
                         ViewBag.Message = "File Uploaded Successfully!";
                         ViewBag.SubmittedMsg = upload.Message;
-                        return RedirectToAction("Index");
+                        //return RedirectToAction("Index");
+                        return View();
                     }
                     ViewBag.ExtensionMessage = "File Uploaded should be Excel or CSV only!";
                     return View(upload);
