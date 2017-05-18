@@ -1,0 +1,71 @@
+﻿@model MiniProject.Models.Upload
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Upload The Contact Group</h2>
+
+@using (Html.BeginForm("Create", "Uploads", null, FormMethod.Post, new { id = "myForm",enctype = "multipart/form-data",
+    onsubmit = "return show_confirm()"
+}))
+{
+        @Html.AntiForgeryToken()
+
+
+        <div class="form-horizontal">
+        @*<h4>Upload</h4>*@
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Message, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.Message,  new {  id = "msg",@class = "form-control", cols = "200", rows = "5" })
+                @Html.ValidationMessageFor(model => model.Message, "", new { @class = "text-danger" })
+                <span style="color:red">@ViewBag.CheckTodayMessage</span>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            @Html.Label("File", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="file" id="UploadedFile" name="UploadedFile" />
+                <span style="color:red">@ViewBag.ExtensionMessage</span>
+                <span style="color:green">@ViewBag.Message</span>
+                
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+
+            </div>
+        </div>
+    </div>
+}
+<span>Submitted Message:@ViewBag.SubmittedMsg</span>
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
+
+<script>
+    function show_confirm() {
+        var msg = $("#msg").val();
+        var r = confirm("Do you want to submit this message:"+msg);
+        if (r == true) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+</script>
+
+
